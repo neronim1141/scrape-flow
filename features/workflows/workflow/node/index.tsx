@@ -8,7 +8,7 @@ import {
 } from "@xyflow/react";
 import { FC, memo } from "react";
 import { AppNode, TaskParameters } from "./type";
-import { ColorRegistry, TaskRegistry } from "../tasks/registry";
+import { HandleRegistry, TaskRegistry } from "../tasks/registry";
 import { NodeField } from "./field";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -36,7 +36,7 @@ const NodeHeader: FC<{
           {task.isEntryPoint && <Badge>Entry point</Badge>}
           <Badge className="gap-2 flex items-center text-xs">
             <CoinsIcon size={16} />
-            TODO
+            {task.credits}
           </Badge>
           {!task.isEntryPoint && (
             <>
@@ -102,7 +102,7 @@ const NodeInput: FC<NodeInputProps> = ({ input, nodeId }) => {
           position={Position.Left}
           className={cn(
             "!bg-muted-foreground !border-2 !border-background !-left-2 !size-4",
-            ColorRegistry[input.type]
+            HandleRegistry[input.type]
           )}
         />
       )}
@@ -124,7 +124,7 @@ const NodeOutput: FC<NodeOutputProps> = ({ output, nodeId }) => {
         position={Position.Right}
         className={cn(
           "!bg-muted-foreground !border-2 !border-background !-right-2 !size-4",
-          ColorRegistry[output.type]
+          HandleRegistry[output.type]
         )}
       />
     </div>

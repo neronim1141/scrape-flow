@@ -3,9 +3,11 @@ import { Task } from "../../node/type";
 
 export const PageToHtmlTask = {
   type: "PAGE_TO_HTML",
-  label: "Page to html",
+  label: "Get HTML from page",
   icon: (props) => <CodeIcon className="stroke-rose-400" {...props} />,
   isEntryPoint: false,
+  credits: 2,
+
   inputs: [
     {
       name: "Web page",

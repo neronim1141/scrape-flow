@@ -1,6 +1,6 @@
 import { Node } from "@xyflow/react";
 import { LucideProps } from "lucide-react";
-import { ReactNode } from "react";
+import { FC, ReactNode } from "react";
 
 export interface AppNodeData {
   type: TaskType;
@@ -28,10 +28,11 @@ export type TaskType =
 export interface Task {
   type: TaskType;
   label: string;
-  icon: (props: LucideProps) => ReactNode;
+  icon: FC<LucideProps>;
   isEntryPoint: boolean;
   inputs: TaskParameters[];
   outputs: TaskParameters[];
+  credits: number;
 }
 export interface NodeFieldProps {
   param: TaskParameters;

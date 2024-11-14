@@ -6,6 +6,7 @@ export const ExtractTextFromElementTask = {
   label: "Extract text from element",
   icon: (props) => <TextIcon className="stroke-rose-400" {...props} />,
   isEntryPoint: false,
+  credits: 2,
   inputs: [
     {
       name: "Html",
