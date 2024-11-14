@@ -3,12 +3,14 @@ import { FC, useCallback } from "react";
 import { AppNode, TaskParameters } from "../type";
 import { StringNodeField } from "./string";
 import { useReactFlow } from "@xyflow/react";
+import { BrowserInstanceNodeField } from "./browser-instance";
 
 interface NodeFieldProps {
   param: TaskParameters;
   nodeId: string;
+  disabled: boolean;
 }
-export const NodeField: FC<NodeFieldProps> = ({ param, nodeId }) => {
+export const NodeField: FC<NodeFieldProps> = ({ param, nodeId, disabled }) => {
   const { updateNodeData, getNode } = useReactFlow<AppNode>();
   const node = getNode(nodeId);
   const value = node?.data.inputs?.[param.name];
@@ -29,6 +31,14 @@ export const NodeField: FC<NodeFieldProps> = ({ param, nodeId }) => {
         <StringNodeField
           param={param}
           value={value}
+          disabled={disabled}
+          onUpdate={updateNodeParamValue}
+        />
+      );
+    case "BROWSER_INSTANCE":
+      return (
+        <BrowserInstanceNodeField
+          param={param}
           onUpdate={updateNodeParamValue}
         />
       );

@@ -13,7 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import React, { FC, useCallback } from "react";
 import { updateWorkflow } from "./update-workflow.action";
 import { toast } from "sonner";
-import { AppNode } from "./node/type";
+import { AppNode } from "../node/type";
 const saveWorkflowId = "save-workflow";
 
 interface FlowHeaderProps {
@@ -40,10 +40,10 @@ export const FlowHeader: FC<FlowHeaderProps> = ({ title, subtitle }) => {
   const onSubmit = useCallback(async () => {
     toast.loading("Saving workflow", { id: saveWorkflowId });
     mutate({ id: workflowId, definition: toObject() });
-  }, [mutate, workflowId]);
+  }, [mutate, workflowId, toObject]);
 
   return (
-    <header className="flex p-2 border-p-2 justify-between w-full h-[60px] sticky top-0 bg-background z-10">
+    <header className="flex p-2 border-b-2 justify-between w-full h-[60px] sticky top-0 bg-background z-10">
       <div className="flex gap-1 flex-1">
         <Tooltip>
           <TooltipTrigger asChild>

@@ -6,7 +6,7 @@ import { workflowsTable } from "@/features/database/schema";
 import { redirect } from "next/navigation";
 import { ReactFlowJsonObject } from "@xyflow/react";
 import { AppNode } from "../workflow/node/type";
-import { createNode } from "../workflow/create-node";
+import { createNode } from "../workflow/editor/create-node";
 
 const initialFlow: ReactFlowJsonObject<AppNode> = {
   edges: [],

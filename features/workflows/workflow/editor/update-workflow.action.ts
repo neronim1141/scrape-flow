@@ -5,7 +5,7 @@ import { workflowsTable } from "@/features/database/schema";
 import { auth } from "@clerk/nextjs/server";
 import { ReactFlowJsonObject } from "@xyflow/react";
 import { and, eq } from "drizzle-orm";
-import { AppNode } from "./node/type";
+import { AppNode } from "../node/type";
 import { revalidatePath } from "next/cache";
 
 export const updateWorkflow = async ({

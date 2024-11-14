@@ -1,5 +1,5 @@
-import Editor from "@/features/workflows/workflow/editor";
-import { getWorkflow } from "@/features/workflows/workflow/get-workflow.action";
+import Editor from "@/features/workflows/workflow/editor/editor";
+import { getWorkflow } from "@/features/workflows/workflow/editor/get-workflow.action";
 import { auth } from "@clerk/nextjs/server";
 import { NextPage } from "next";
 
