@@ -50,6 +50,7 @@ export const FlowHeader: FC<FlowHeaderProps> = ({ title, subtitle }) => {
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Go back"
               onClick={() => {
                 router.back();
               }}

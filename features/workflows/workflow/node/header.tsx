@@ -24,6 +24,7 @@ export const NodeHeader: FC<{
             variant="ghost"
             size="icon"
             className="drag-handle cursor-grab"
+            aria-label="drag handle"
           >
             <GripVertical size={20} />
           </Button>

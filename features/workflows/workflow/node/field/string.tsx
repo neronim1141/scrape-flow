@@ -19,7 +19,9 @@ export const StringNodeField: FC<StringNodeFieldProps> = ({
       </Label>
       <Input
         id={id}
+        aria-labelledby={id}
         className="text-xs"
+        placeholder="Enter value"
         value={internalValue}
         onChange={(e) => setInternalValue(e.target.value)}
         onBlur={(e) => onUpdate(e.target.value)}
