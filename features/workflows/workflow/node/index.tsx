@@ -19,6 +19,7 @@ import { CoinsIcon, CopyIcon, GripVertical, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Task } from "./type";
 import { createNode } from "../editor/create-node";
+import { useFlowValidation } from "../editor/flow-validation.context";
 
 const NodeHeader: FC<{
   task: Task;
@@ -91,8 +92,17 @@ const NodeInput: FC<NodeInputProps> = ({ input, nodeId }) => {
   const isConnected = edges.some(
     (edge) => edge.target === nodeId && edge.targetHandle === input.name
   );
+  const { invalidInputs } = useFlowValidation();
+  const hasErrors = invalidInputs
+    .find((node) => node.nodeId === nodeId)
+    ?.inputs.find((invalidInput) => invalidInput === input.name);
+
   return (
-    <div className="flex justify-start relative p-3 bg-secondary w-full">
+    <div
+      className={cn("flex justify-start relative p-3 bg-secondary w-full", {
+        "bg-destructive/30": hasErrors,
+      })}
+    >
       <NodeField param={input} nodeId={nodeId} disabled={isConnected} />
       {!input.hideHandle && (
         <Handle
@@ -131,9 +141,14 @@ const NodeOutput: FC<NodeOutputProps> = ({ output, nodeId }) => {
   );
 };
 
+const DEV_MODE = process.env.NEXT_PUBLIC_DEV_MODE === "true";
 export const FlowScrapeNode = memo<NodeProps<AppNode>>((props) => {
   const task = TaskRegistry[props.data.type];
   const onDoubleClick = useNodeCenter(props.id);
+  const { invalidInputs } = useFlowValidation();
+  const hasInvalidInputs = invalidInputs.some(
+    (node) => node.nodeId === props.id
+  );
 
   return (
     <div
@@ -142,9 +157,11 @@ export const FlowScrapeNode = memo<NodeProps<AppNode>>((props) => {
         "rounded-md cursor-pointer bg-background border-2 w-[420px] text-xs flex flex-col",
         {
           "border-primary": props.selected,
+          "border-destructive border-2": hasInvalidInputs,
         }
       )}
     >
+      {DEV_MODE && <Badge>DEV:{props.id}</Badge>}
       <NodeHeader task={task} nodeId={props.id} />
 
       <div className="flex flex-col divide-y-2">

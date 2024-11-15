@@ -1,11 +1,11 @@
 import { Node } from "@xyflow/react";
 import { LucideProps } from "lucide-react";
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 export interface AppNodeData {
   type: TaskType;
-  inputs?: Record<string, string>;
-  outputs?: Record<string, string>;
+  inputs: Record<string, string>;
+  outputs: Record<string, string>;
   [key: string]: unknown;
 }
 
@@ -41,3 +41,8 @@ export interface NodeFieldProps {
 
   onUpdate: (value: string) => void;
 }
+
+export type AppNodeMissingInputs = {
+  nodeId: string;
+  inputs: string[];
+};
