@@ -14,7 +14,7 @@ export const pageToHTMLExecutor = async (
       environment.log.error(e.message);
     }
     console.error(e);
-    environment.log.error("Something went wrong");
+    environment.log.error("Something went wrong with: page to html");
     return false;
   }
 };

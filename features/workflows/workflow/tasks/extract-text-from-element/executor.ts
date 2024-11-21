@@ -26,7 +26,9 @@ export const extractTextFromElementExecutor = async (
       environment.log.error(e.message);
     }
     console.error(e);
-    environment.log.error("Something went wrong");
+    environment.log.error(
+      "Something went wrong with: extract text from element"
+    );
     return false;
   }
 };
