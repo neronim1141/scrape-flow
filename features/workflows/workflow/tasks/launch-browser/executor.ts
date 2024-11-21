@@ -1,27 +1,23 @@
 import "server-only";
-import chromium from "chrome-aws-lambda";
 import { ExecutionEnvironment } from "../../execution/type";
 import { LaunchBrowserTask } from "./config";
-let chrome = {};
-let puppeteer;
+import chromium from "@sparticuz/chromium-min";
+import puppeteer from "puppeteer-core";
 
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  // running on the Vercel platform.
-  chrome = require("chrome-aws-lambda");
-  puppeteer = require("puppeteer-core");
-} else {
-  // running locally.
-  puppeteer = require("puppeteer");
-}
+const isLocal = !!process.env.CHROME_EXECUTABLE_PATH;
 export const launchBrowserExecutor = async (
   environment: ExecutionEnvironment<typeof LaunchBrowserTask>
 ) => {
   try {
     const websiteUrl = environment.getInput("Website Url");
     const browser = await puppeteer.launch({
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+      args: isLocal ? puppeteer.defaultArgs() : chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: chromium.executablePath,
+      executablePath:
+        process.env.CHROME_EXECUTABLE_PATH ||
+        (await chromium.executablePath(
+          "https://scrapeflow.s3.amazonaws.com/chromium-v131.0.0-pack.tar"
+        )),
       headless: chromium.headless,
     });
     environment.log.info("Browser started successfully");
