@@ -1,7 +1,8 @@
-import { Edge, getConnectedEdges, getIncomers } from "@xyflow/react";
+import { Edge } from "@xyflow/react";
 import { AppNode, AppNodeMissingInputs } from "../node/type";
 import { ExecutionPlan, ExecutionPlanError } from "./type";
 import { TaskRegistry } from "../tasks/registry";
+import { getIncomers } from "./utils";
 
 const validateNode = (node: AppNode, edges: Edge[]) => {
   const invalidInputs: string[] = [];

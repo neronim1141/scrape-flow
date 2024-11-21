@@ -1,5 +1,5 @@
 import { CodeIcon } from "lucide-react";
-import { Task } from "../../node/type";
+import { Task } from "../type";
 
 export const PageToHtmlTask = {
   type: "PAGE_TO_HTML",
@@ -25,4 +25,4 @@ export const PageToHtmlTask = {
       type: "BROWSER_INSTANCE",
     },
   ],
-} satisfies Task;
+} as const satisfies Task;

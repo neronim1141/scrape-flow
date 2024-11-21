@@ -22,9 +22,10 @@ import React, { DragEvent, FC, useCallback, useRef } from "react";
 import "@xyflow/react/dist/style.css";
 import { FlowScrapeNode } from "../node";
 import { createNode } from "./create-node";
-import { AppNode, TaskType } from "../node/type";
+import { AppNode } from "../node/type";
 import { DeletableEdge } from "../edges/deletable-edge";
 import { TaskRegistry } from "../tasks/registry";
+import { TaskType } from "../tasks/type";
 
 const nodeTypes = {
   FlowScrapeNode: FlowScrapeNode,

@@ -1,9 +1,10 @@
 "use client";
 import { FC, useCallback } from "react";
-import { AppNode, TaskParameters } from "../type";
+import { AppNode } from "../type";
 import { StringNodeField } from "./string";
 import { useReactFlow } from "@xyflow/react";
 import { BrowserInstanceNodeField } from "./browser-instance";
+import { TaskParameters } from "../../tasks/type";
 
 interface NodeFieldProps {
   param: TaskParameters;

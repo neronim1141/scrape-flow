@@ -8,11 +8,8 @@ export const getWorkflow = async (id: string) => {
   if (!userId) {
     throw new Error("unauthorized");
   }
-  const workflow = (
-    await db
-      .select()
-      .from(workflowsTable)
-      .where(and(eq(workflowsTable.userId, userId), eq(workflowsTable.id, id)))
-  ).at(0);
+  const workflow = await db.query.workflowsTable.findFirst({
+    where: and(eq(workflowsTable.userId, userId), eq(workflowsTable.id, id)),
+  });
   return workflow;
 };

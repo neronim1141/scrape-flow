@@ -7,9 +7,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { DragEvent, FC } from "react";
-import { TaskType } from "../node/type";
 import { Button } from "@/components/ui/button";
 import { TaskRegistry } from "../tasks/registry";
+import { TaskType } from "../tasks/type";
 
 const TaskMenuButton: FC<{ type: TaskType }> = ({ type }) => {
   const task = TaskRegistry[type];

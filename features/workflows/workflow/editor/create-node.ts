@@ -1,5 +1,6 @@
 import { XYPosition } from "@xyflow/react";
-import { AppNode, TaskType } from "../node/type";
+import { AppNode } from "../node/type";
+import { TaskType } from "../tasks/type";
 
 export const createNode = (
   nodeType: TaskType,

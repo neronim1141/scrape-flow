@@ -1,5 +1,5 @@
 import { TextIcon } from "lucide-react";
-import { Task } from "../../node/type";
+import { Task } from "../type";
 
 export const ExtractTextFromElementTask = {
   type: "EXTRACT_TEXT_FROM_ELEMENT",
@@ -26,4 +26,4 @@ export const ExtractTextFromElementTask = {
       type: "STRING",
     },
   ],
-} satisfies Task;
+} as const satisfies Task;

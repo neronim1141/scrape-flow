@@ -1,5 +1,5 @@
 import { GlobeIcon } from "lucide-react";
-import { Task } from "../../node/type";
+import { Task } from "../type";
 
 export const LaunchBrowserTask = {
   type: "LAUNCH_BROWSER",
@@ -23,4 +23,4 @@ export const LaunchBrowserTask = {
       type: "BROWSER_INSTANCE",
     },
   ],
-} satisfies Task;
+} as const satisfies Task;

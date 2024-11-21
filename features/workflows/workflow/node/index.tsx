@@ -7,8 +7,9 @@ import {
   useReactFlow,
 } from "@xyflow/react";
 import { FC, memo } from "react";
-import { AppNode, TaskParameters } from "./type";
-import { HandleRegistry, TaskRegistry } from "../tasks/registry";
+import { AppNode } from "./type";
+import { TaskRegistry } from "../tasks/registry";
+import { HandleRegistry } from "./handle-registry";
 import { NodeField } from "./field";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
@@ -17,9 +18,9 @@ import { useNodeCenter } from "./use-node-center";
 import { Badge } from "@/components/ui/badge";
 import { CoinsIcon, CopyIcon, GripVertical, TrashIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Task } from "./type";
 import { createNode } from "../editor/create-node";
 import { useFlowValidation } from "../editor/flow-validation.context";
+import { Task, TaskParameters } from "../tasks/type";
 
 const NodeHeader: FC<{
   task: Task;

@@ -15,22 +15,13 @@ import { updateWorkflow } from "./update-workflow.action";
 import { toast } from "sonner";
 import { AppNode } from "../node/type";
 import { useExecutionPlan } from "../execution/use-execution-plan";
+import { runWorkflow } from "../execution/run-exection.action";
 const saveWorkflowId = "save-workflow";
 const executeWorkflowId = "save-workflow";
 
-interface FlowHeaderProps {
-  title: string;
-  subtitle?: string;
-}
-export const FlowHeader: FC<FlowHeaderProps> = ({ title, subtitle }) => {
-  const router = useRouter();
+const SaveButton: FC<{ workflowId: string }> = ({ workflowId }) => {
   const { toObject } = useReactFlow<AppNode>();
-  const generateExecutionPlan = useExecutionPlan();
-  const { workflowId } = useParams<{ workflowId?: string }>();
-  if (!workflowId)
-    throw new Error(
-      "This component should be used within dynamic [workflowId] segment"
-    );
+
   const { mutate: mutateSave, isPending: saveIsPending } = useMutation({
     mutationFn: updateWorkflow,
     onSuccess: () => {
@@ -44,21 +35,64 @@ export const FlowHeader: FC<FlowHeaderProps> = ({ title, subtitle }) => {
     toast.loading("Saving workflow", { id: saveWorkflowId });
     mutateSave({ id: workflowId, definition: toObject() });
   }, [mutateSave, workflowId, toObject]);
+  return (
+    <Button
+      variant="outline"
+      className="flex items-center gap-2"
+      onClick={onSave}
+      disabled={saveIsPending}
+    >
+      <CheckIcon size={16} className="stroke-green-400" /> Save
+    </Button>
+  );
+};
+const ExecuteButton: FC<{ workflowId: string }> = ({ workflowId }) => {
+  const generateExecutionPlan = useExecutionPlan();
+  const { toObject } = useReactFlow<AppNode>();
 
   const { mutate: mutateExecute, isPending: executionIsPending } = useMutation({
-    mutationFn: updateWorkflow,
+    mutationFn: runWorkflow,
     onSuccess: () => {
-      toast.success("Workflow Executed", { id: executeWorkflowId });
+      toast.success("Executed started", { id: executeWorkflowId });
     },
     onError: () => {
-      toast.error("Failed to execute workflow", { id: executeWorkflowId });
+      toast.error("Failed to execute", { id: executeWorkflowId });
     },
   });
   const onExecute = useCallback(async () => {
-    // toast.loading("Executing workflow", { id: executeWorkflowId });
     const executionPlan = generateExecutionPlan();
-    // mutateSave({ id: workflowId, definition: toObject() });
-  }, [generateExecutionPlan]);
+    if (!executionPlan) return;
+    toast.loading("Executing...", { id: executeWorkflowId });
+    mutateExecute({ workflowId, flowDefinition: toObject() });
+  }, [generateExecutionPlan, toObject, mutateExecute, workflowId]);
+  return (
+    <Button
+      variant="outline"
+      className="flex items-center gap-2"
+      onClick={onExecute}
+      disabled={executionIsPending}
+    >
+      <PlayIcon size={16} className="stroke-orange-400" /> Execute
+    </Button>
+  );
+};
+
+interface WorkflowTopbarProps {
+  title: string;
+  subtitle?: string;
+  hideButtons?: boolean;
+}
+export const WorkflowTopbar: FC<WorkflowTopbarProps> = ({
+  title,
+  subtitle,
+  hideButtons = false,
+}) => {
+  const router = useRouter();
+  const { workflowId } = useParams<{ workflowId?: string }>();
+  if (!workflowId)
+    throw new Error(
+      "This component should be used within dynamic [workflowId] segment"
+    );
 
   return (
     <header className="flex p-2 border-b-2 justify-between w-full h-[60px] sticky top-0 bg-background z-10">
@@ -86,22 +120,12 @@ export const FlowHeader: FC<FlowHeaderProps> = ({ title, subtitle }) => {
         </div>
       </div>
       <div className="flex gap-1 flex-1 justify-end">
-        <Button
-          variant="outline"
-          className="flex items-center gap-2"
-          onClick={onExecute}
-          disabled={executionIsPending}
-        >
-          <PlayIcon size={16} className="stroke-orange-400" /> Execute
-        </Button>
-        <Button
-          variant="outline"
-          className="flex items-center gap-2"
-          onClick={onSave}
-          disabled={saveIsPending}
-        >
-          <CheckIcon size={16} className="stroke-green-400" /> Save
-        </Button>
+        {!hideButtons && (
+          <>
+            <ExecuteButton workflowId={workflowId} />
+            <SaveButton workflowId={workflowId} />
+          </>
+        )}
       </div>
     </header>
   );

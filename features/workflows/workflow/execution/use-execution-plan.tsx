@@ -17,10 +17,12 @@ export const useExecutionPlan = () => {
       nodes,
       edges
     );
-    console.log(
-      "both execution approaches return same result:",
-      JSON.stringify(executionPlan) === JSON.stringify(executionPlan2)
-    );
+    if (
+      JSON.stringify(executionPlan, null, 4) ===
+      JSON.stringify(executionPlan2, null, 4)
+    )
+      console.log("both execution approaches return same result:");
+    else throw new Error("Something go wrong");
     if (error) {
       switch (error.type) {
         case "NO_ENTRY_POINT":

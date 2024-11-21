@@ -3,7 +3,7 @@ import type { Workflow } from "@/features/database/schema";
 import { FC } from "react";
 import { ReactFlowProvider } from "@xyflow/react";
 import FlowEditor from "./flow-editor";
-import { FlowHeader } from "./flow-header";
+import { WorkflowTopbar } from "./workflow-top-bar";
 import { TaskMenu } from "./task-menu";
 import { FlowValidationContextProvider } from "./flow-validation.context";
 
@@ -15,7 +15,7 @@ const Editor: FC<EditorProps> = ({ workflow }) => {
     <FlowValidationContextProvider>
       <ReactFlowProvider>
         <div className="flex flex-col h-full w-full overflow-hidden">
-          <FlowHeader title="Workflow editor" subtitle={workflow.name} />
+          <WorkflowTopbar title="Workflow editor" subtitle={workflow.name} />
           <section className="flex h-full overflow-auto">
             <TaskMenu />
             <FlowEditor workflow={workflow} />

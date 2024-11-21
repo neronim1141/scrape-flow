@@ -1,4 +1,4 @@
-import { sql, type InferSelectModel } from "drizzle-orm";
+import { relations, sql, type InferSelectModel } from "drizzle-orm";
 import {
   timestamp,
   pgTable,
@@ -10,8 +10,9 @@ import {
 import { cuid2 } from "drizzle-cuid2/postgres";
 import { ReactFlowJsonObject } from "@xyflow/react";
 import { AppNode } from "@/features/workflows/workflow/node/type";
+import { workflowsExecutionTable } from "./workflow-execution";
+import { executionStatusEnum, statusEnum } from "./enums";
 
-export const statusEnum = pgEnum("workflow_status", ["DRAFT", "PUBLISHED"]);
 export const workflowsTable = pgTable(
   "workflow",
   {
@@ -21,6 +22,9 @@ export const workflowsTable = pgTable(
     description: text(),
     definition: json().$type<ReactFlowJsonObject<AppNode> | null>(),
     status: statusEnum().notNull(),
+    lastRunAt: timestamp(),
+    lastRunId: text(),
+    lastRunStatus: executionStatusEnum(),
     createdAt: timestamp().defaultNow().notNull(),
     updatedAt: timestamp({ mode: "date", precision: 3 }).$onUpdate(
       () => new Date()
@@ -28,4 +32,7 @@ export const workflowsTable = pgTable(
   },
   (t) => [unique().on(t.userId, t.name)]
 );
+export const workflowRelations = relations(workflowsTable, ({ many }) => ({
+  executions: many(workflowsExecutionTable),
+}));
 export type Workflow = InferSelectModel<typeof workflowsTable>;

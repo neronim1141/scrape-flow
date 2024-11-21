@@ -7,6 +7,7 @@ import { ReactFlowJsonObject } from "@xyflow/react";
 import { and, eq } from "drizzle-orm";
 import { AppNode } from "../node/type";
 import { revalidatePath } from "next/cache";
+import { getWorkflow } from "./get-workflow.action";
 
 export const updateWorkflow = async ({
   id,
@@ -19,12 +20,7 @@ export const updateWorkflow = async ({
   if (!userId) {
     throw new Error("unauthorized");
   }
-  const workflow = (
-    await db
-      .select()
-      .from(workflowsTable)
-      .where(and(eq(workflowsTable.id, id), eq(workflowsTable.userId, userId)))
-  ).at(0);
+  const workflow = await getWorkflow(id);
   if (!workflow) throw new Error("Workflow not found");
   if (workflow.status !== "DRAFT") throw new Error("Workflow is not a draft");
   await db
