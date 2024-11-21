@@ -16,7 +16,7 @@ export const launchBrowserExecutor = async (
       executablePath:
         process.env.CHROME_EXECUTABLE_PATH ||
         (await chromium.executablePath(
-          "https://scrapeflow.s3.amazonaws.com/chromium-v126.0.0-pack.tar"
+          "https://scrapeflow.s3.amazonaws.com/chromium-v131.0.0-pack.tar"
         )),
       headless: chromium.headless,
     });
