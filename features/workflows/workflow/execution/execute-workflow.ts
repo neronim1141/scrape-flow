@@ -176,7 +176,6 @@ const executePhase = async (
   logCollector: LogCollector
 ) => {
   const runFn = ExecutionRegistry[phase.node.data.type];
-  await waitFor(4000);
   if (!runFn) return true;
   const executionEnvironment = createExecutionEnvironment(
     phase.node,
