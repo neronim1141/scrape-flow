@@ -1,4 +1,4 @@
-import { Browser, Page } from "puppeteer";
+import { Browser, Page } from "puppeteer-core";
 import { AppNode, AppNodeMissingInputs } from "../node/type";
 import { Task } from "../tasks/type";
 import { LogCollector } from "../log/type";

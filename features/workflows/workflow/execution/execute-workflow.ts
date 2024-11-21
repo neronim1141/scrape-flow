@@ -2,7 +2,6 @@ import "server-only";
 import {
   ExecutionPhase,
   executionPhaseTable,
-  Workflow,
   WorkflowExecution,
   workflowsExecutionTable,
   workflowsTable,
@@ -15,12 +14,10 @@ import { AppNode } from "../node/type";
 import { ExecutionRegistry } from "../tasks/registry.server";
 import { WorkflowEnvironment } from "./type";
 import { LogCollector } from "../log/type";
-import { Browser, Page } from "puppeteer";
+import { Browser, Page } from "puppeteer-core";
 import { Edge, ReactFlowJsonObject } from "@xyflow/react";
 import { createLogCollector } from "../log/create-log-collector";
 import { executionLogTable } from "@/features/database/schema/execution-log";
-import { timestamp } from "drizzle-orm/mysql-core";
-import { waitFor } from "@/lib/wait-for";
 
 export const executeWorkflow = async (
   execution: WorkflowExecution & {
