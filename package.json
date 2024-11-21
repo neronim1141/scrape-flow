@@ -43,7 +43,6 @@
     "@vercel/postgres": "^0.10.0",
     "@xyflow/react": "^12.3.5",
     "cheerio": "^1.0.0",
-    "chrome-aws-lambda": "^10.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
